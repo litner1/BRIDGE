@@ -1,0 +1,56 @@
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\bin\Debug\bridge.exe.config
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\bin\Debug\bridge.exe
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\bin\Debug\bridge.pdb
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\MainWindow.g.cs
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\App.g.cs
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge_MarkupCompile.cache
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge_MarkupCompile.lref
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\MainWindow.baml
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.g.resources
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.Properties.Resources.resources
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.csproj.GenerateResource.cache
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.csproj.CoreCompileInputs.cache
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.exe
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.pdb
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge_Content.g.cs
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.csprojAssemblyReference.cache
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\App.baml
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bidding.g.cs
+C:\Users\Piotr\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bidding.baml
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\bin\Debug\bridge.exe.config
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\bin\Debug\bridge.exe
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\bin\Debug\bridge.pdb
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.csprojAssemblyReference.cache
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bidding.g.cs
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\MainWindow.g.cs
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\App.g.cs
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge_Content.g.cs
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge_MarkupCompile.cache
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge_MarkupCompile.lref
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\App.baml
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bidding.baml
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\MainWindow.baml
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.g.resources
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.Properties.Resources.resources
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.csproj.GenerateResource.cache
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.csproj.CoreCompileInputs.cache
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.exe
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\seminarium\bridge\bridge\obj\Debug\bridge.pdb
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge.csprojAssemblyReference.cache
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bid.g.cs
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\MainWindow.g.cs
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\App.g.cs
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge_MarkupCompile.cache
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge_MarkupCompile.lref
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\App.baml
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bid.baml
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\MainWindow.baml
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge.g.resources
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge.pdb
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\bin\Debug\bridge.exe.config
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\bin\Debug\bridge.exe
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\bin\Debug\bridge.pdb
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge.Properties.Resources.resources
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge.csproj.GenerateResource.cache
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge.csproj.CoreCompileInputs.cache
+C:\Users\Igor\Desktop\TRZECI ROK\informatyka\SEM 6\seminarium\bridge\bridge\obj\Debug\bridge.exe

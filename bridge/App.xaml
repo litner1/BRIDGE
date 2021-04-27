@@ -1,0 +1,11 @@
+﻿<Application x:Class="bridge.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:bridge"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="01" UriSource="Resources\01.png"></BitmapImage>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
