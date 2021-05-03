@@ -34,6 +34,8 @@ namespace bridge
         static public List<Player> players = new List<Player>();
 
         List<Card> deck = new List<Card>();
+        List<Card> deck2 = new List<Card>();
+
         List<BitmapImage> bitmapImages = new List<BitmapImage>();
         
         
@@ -86,6 +88,8 @@ namespace bridge
             Random random = new Random();
             int r;
 
+            deck2 = new List<Card>(deck);
+
             for (int i = 0; i < 13; i++)
             {
                 r = random.Next(deck.Count);
@@ -121,6 +125,8 @@ namespace bridge
                 W.cards.Add(tmp);
                 deck.Remove(tmp);
             }
+
+
 
             N.cardplace.Add(N01);
             N.cardplace.Add(N02);
@@ -196,8 +202,52 @@ namespace bridge
 
         private void Arrange(object sender, RoutedEventArgs e)
         {
+            Random random = new Random();
+            int r;
 
-           
+            //testy
+            N.cards.Clear();
+            E.cards.Clear();
+            S.cards.Clear();
+            W.cards.Clear();
+            List<Card> deck3 = new List<Card>(deck2);
+            for (int i = 0; i < 13; i++)
+            {
+                r = random.Next(deck3.Count);
+                Card tmp = new Card();
+                tmp = deck3[r];
+                N.cards.Add(tmp);
+                deck3.Remove(tmp);
+            }
+
+            for (int i = 0; i < 13; i++)
+            {
+                r = random.Next(deck3.Count);
+                Card tmp = new Card();
+                tmp = deck3[r];
+                E.cards.Add(tmp);
+                deck3.Remove(tmp);
+            }
+
+            for (int i = 0; i < 13; i++)
+            {
+                r = random.Next(deck3.Count);
+                Card tmp = new Card();
+                tmp = deck3[r];
+                S.cards.Add(tmp);
+                deck3.Remove(tmp);
+            }
+
+            for (int i = 0; i < 13; i++)
+            {
+                r = random.Next(deck3.Count);
+                Card tmp = new Card();
+                tmp = deck3[r];
+                W.cards.Add(tmp);
+                deck3.Remove(tmp);
+            }
+            //testy
+
             N.Rearrange();
             E.Rearrange();
             S.Rearrange();

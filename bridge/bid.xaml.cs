@@ -65,6 +65,7 @@ namespace bridge
 
             Random r = new Random();
             int start = r.Next(0, 4);
+            course.Text += "W\tN\tE\tS\n";
             if (start == 0)
             {
                 vulnerability.Text += "\nDealer\tW";
@@ -75,16 +76,21 @@ namespace bridge
             else if (start == 1)
             {
                 vulnerability.Text += "\nDealer\tN";
+                course.Text += "*\t";
                 Computer_Move(MainWindow.N);
                 Computer_Move(MainWindow.E);
             }
             else if (start == 2)
             {
                 vulnerability.Text += "\nDealer\tE";
+                course.Text += "*\t*\t";
                 Computer_Move(MainWindow.E);
             }
             else
+            {
                 vulnerability.Text += "\nDealer\tS";
+                course.Text += "*\t*\t*\t";
+            }
 
             start = r.Next(0, 4);
             if (start == 0)
@@ -117,25 +123,43 @@ namespace bridge
 
             }
 
-            if (sender != X_Double)
+            if (sender == X_Double) 
+            {
+                List<string> tmp = new List<string>();
+                tmp.Add("S");
+                tmp.Add("X");
+                course.Text += "X\n";
+                bids.Add(tmp);
+            }
+            else if (sender == Pass)
+            {
+                List<string> tmp = new List<string>();
+                tmp.Add("S");
+                tmp.Add("PAS");
+                course.Text += "PAS\n";
+                bids.Add(tmp);
+                if (bids.Count >= 4 && bids[bids.Count - 1][1] == "PAS" && bids[bids.Count - 2][1] == "PAS" && bids[bids.Count - 3][1] == "PAS")
+                {
+                    MessageBox.Show("koniec");
+                    return;
+                }
+            }
+            else
             {
                 //zablokowanie niższych odzywek
                 for (int i = 0; i <= counter; i++)
                     buttons[i].IsEnabled = false;
 
                 //rejestrowanie przebiegu rozgrywki
-                course.Text += buttons[counter].Content + " ";
+                if (Is_Graph1())
+                    Graph1(MainWindow.S);
+                else if (Is_Graph2())
+                    Graph2(MainWindow.S, bids[bids.Count - 2][1]);
+
+                course.Text += buttons[counter].Content + "\n";
                 List<string> tmp = new List<string>();
                 tmp.Add("S");
                 tmp.Add(buttons[counter].Content.ToString());
-                bids.Add(tmp);
-            }
-            else
-            {
-                List<string> tmp = new List<string>();
-                tmp.Add("S");
-                tmp.Add("X");
-                course.Text += "X ";
                 bids.Add(tmp);
             }
 
@@ -154,31 +178,23 @@ namespace bridge
                 MessageBox.Show("koniec");
                 this.Close();
             }
-
-            //licznik kiedy nie pas +3 == ewaluiacja
-
-
         }
-
 
         bool Is_Possible(string bid)
         {
             if (bid == "PAS" || bid == "X")
                 return true;
-            if (bids.Count == 0)
+
+            for (int i = 0; i < buttons.Count; i++)
             {
-                for (int i = 0; i < buttons.Count; i++)
+                if (buttons[i].Content.ToString() == bid)
                 {
-                    if (buttons[i].Content.ToString() == bid)
-                    {
-                        buttons[i].IsEnabled = false;
-                        break;
-                    }
                     buttons[i].IsEnabled = false;
+                    break;
                 }
-
+                buttons[i].IsEnabled = false;
             }
-
+           
             if (bids.Count != 0 && bids[bids.Count - 1][1] == bid) 
                 return false;
 
@@ -207,11 +223,10 @@ namespace bridge
 
         string Graph1(Player x)
         {
-            string result = "PAS";
             if (x.dist.HP < 6)
             {
-                x.inf.maxHP = 5;
-                return result;
+                x.inf.HP_max = 5;
+                return "PAS";
             }
 
             if (x.dist.HP < 12)
@@ -219,130 +234,584 @@ namespace bridge
                 string color = Find_Longest_Color(x);
                 if (color == "C" && x.dist.C >= 6)
                 {
-                    x.inf.maxD = 5;
+                    x.inf.HP_min = 6;
+                    x.inf.D_max = 5;
+                    x.inf.H_max = 5;
+                    x.inf.S_max = 5;
                     return "2C";
                 }
                 if (color == "D" && x.dist.D >= 6)
                 {
+                    x.inf.HP_min = 6;
+                    x.inf.C_max = 6;
+                    x.inf.H_max = 5;
+                    x.inf.S_max = 5;
                     return "2D";
                 }
                 if (color == "H" && x.dist.H >= 6)
                 {
+                    x.inf.HP_min = 6;
+                    x.inf.C_max = 6;
+                    x.inf.D_max = 6;
+                    x.inf.S_max = 5;
                     return "2H";
                 }
                 if (color == "S" && x.dist.S >= 6)
                 {
+                    x.inf.HP_min = 6;
+                    x.inf.C_max = 6;
+                    x.inf.D_max = 6;
+                    x.inf.H_max = 6;
                     return "2S";
                 }
-                x.inf.maxHP = 11;
+
+                x.inf.HP_max = 11;
                 return "PAS";
             }
 
-            x.inf.minHP = 12;
+            x.inf.HP_min = 12;
             if (x.dist.H >= 5 || x.dist.S >= 5)
             {
-                string tmp = "";
+                string tmpp = "";
                 if (x.dist.H >= 5 && x.dist.S < 5)
                 {
-                    tmp = "H";
-                    x.inf.minH = 5;
-                    x.inf.maxS = 4;
+                    tmpp = "H";
+                    x.inf.H_min = 5;
+                    x.inf.S_max = 4;
+                    x.inf.C_max = 8;
+                    x.inf.D_max = 8;
                 }
                 if (x.dist.S >= 5)
                 {
-                    tmp = "S";
-                    x.inf.minS = 5;
+                    tmpp = "S";
+                    x.inf.S_min = 5;
+                    x.inf.C_max = 8;
+                    x.inf.D_max = 8;
                 }
-                return "1" + tmp;
+                return "1" + tmpp;
             }
-            else
+            else if (Is_2(x))
             {
-                x.inf.maxH = 4;
-                x.inf.maxS = 4;
-                string tmp = Find_Longest_Color(x, false);
-                if (tmp == "C")
-                    x.inf.minC = 3;
-                else
-                    x.inf.minD = 3;
-                return "1" + tmp;
+                if (x.dist.HP >= 15 && x.dist.HP <= 17)
+                {
+                    x.inf.H_max = 4;
+                    x.inf.S_max = 4;
+                    x.inf.C_min = 2;
+                    x.inf.D_min = 2;
+                    x.inf.H_min = 2;
+                    x.inf.S_min = 2;
+                    x.inf.HP_min = 15;
+                    x.inf.HP_max = 17;
+                    return "1BA";
+                }
+                if (x.dist.HP >= 21 && x.dist.HP <= 24)
+                {
+                    x.inf.H_max = 4;
+                    x.inf.S_max = 4;
+                    x.inf.C_min = 2;
+                    x.inf.D_min = 2;
+                    x.inf.H_min = 2;
+                    x.inf.S_min = 2;
+                    x.inf.HP_min = 21;
+                    x.inf.HP_max = 24;
+                    return "2BA";
+                }
+                if (x.dist.HP >= 25)
+                {
+                    x.inf.H_max = 4;
+                    x.inf.S_max = 4;
+                    x.inf.C_min = 2;
+                    x.inf.D_min = 2;
+                    x.inf.H_min = 2;
+                    x.inf.S_min = 2;
+                    x.inf.HP_min = 25;
+                    return "3BA";
+                }
             }
 
+            x.inf.H_max = 4;
+            x.inf.S_max = 4;
+            string tmp = Find_Longest_Color(x, false);
+            if (tmp == "C")
+                x.inf.C_min = 3;
+            else
+                x.inf.D_min = 3;
+            return "1" + tmp;
         }
 
         string Graph2(Player x, string bid)
         {
-
             string result = "PAS";
+            if (bid != "X" && bid[1] == 'B') 
+            {
+                int height = bid[0];
+                height++;
+
+                if (x.dist.H >= 5)
+                {
+                    x.inf.H_min = 5;
+                    result = height + "D";
+                }
+                else if (x.dist.S >= 5)
+                {
+                    x.inf.S_min = 5;
+                    result = height + "H";
+                }
+                if (bid == "1BA")
+                {
+
+
+                    if (x.dist.HP <= 7)
+                    {
+                        x.inf.HP_max = 7;
+                        result = "PAS";
+                    }
+                    else if (x.dist.HP <= 10)
+                    {
+                        x.inf.HP_min = 8;
+                        x.inf.HP_max = 10;
+                        result = "2BA";
+                    }
+                    else if (x.dist.HP <= 14)
+                    {
+                        x.inf.HP_min = 11;
+                        x.inf.HP_max = 14;
+                        result = "3BA";
+                    }
+                    else if (x.dist.HP <= 17)
+                    {
+                        x.inf.HP_min = 15;
+                        x.inf.HP_max = 17;
+                        result = "4BA";
+                    }
+                    else if (x.dist.HP <= 20)
+                    {
+                        x.inf.HP_min = 18;
+                        x.inf.HP_max = 20;
+                        result = "6BA";
+                    }
+                    else
+                    {
+                        x.inf.HP_min = 21;
+                        result = "7BA";
+                    }
+                }
+                else if (bid == "2BA")
+                {
+                    if (x.dist.HP <= 3)
+                    {
+                        x.inf.HP_max = 3;
+                        result = "PAS";
+                    }
+                    else if (x.dist.HP <= 8)
+                    {
+                        x.inf.HP_min = 4;
+                        x.inf.HP_max = 8;
+                        result = "3BA";
+                    }
+                    else if (x.dist.HP <= 10)
+                    {
+                        x.inf.HP_min = 9;
+                        x.inf.HP_max = 10;
+                        result = "4BA";
+                    }
+                    else if (x.dist.HP <= 13)
+                    {
+                        x.inf.HP_min = 11;
+                        x.inf.HP_max = 13;
+                        result = "6BA";
+                    }
+                    else
+                    {
+                        x.inf.HP_min = 13;
+                        result = "7BA";
+                    }
+                }
+                else if (bid == "3BA")
+                {
+
+                    if (x.dist.HP <= 4)
+                    {
+                        x.inf.HP_max = 4;
+                        result = "PAS";
+                    }
+                    else if (x.dist.HP <= 7)
+                    {
+                        x.inf.HP_min = 5;
+                        x.inf.HP_max = 7;
+                        result = "4BA";
+                    }
+                    else if (x.dist.HP <= 10)
+                    {
+                        x.inf.HP_min = 8;
+                        x.inf.HP_max = 10;
+                        result = "6BA";
+                    }
+                    else
+                    {
+                        x.inf.HP_min = 11;
+                        result = "7BA";
+                    }
+                }
+
+                return result;
+            }
+
+
             int points = x.dist.HP;
             int counter = 0;
             if (points < 6)
                 return "PAS";
             if (points < 10)
+            {
+                x.inf.HP_min = 6;
+                x.inf.HP_max = 9;
                 counter = 1;
+            }
             else if (points < 13)
+            {
+                x.inf.HP_min = 10;
+                x.inf.HP_max = 12;
                 counter = 2;
+            }
             else if (points < 18)
+            {
+                x.inf.HP_min = 13;
+                x.inf.HP_max = 17;
                 counter = 3;
+            }
             else
+            {
+                x.inf.HP_min = 18;
                 counter = 4;
-
+            }
 
             if (bid[0] == 'X')
             {
-                if (Is_5(x))
-                    return counter + Find_Longest_Color(x);
-                else
-                    return counter + "BA";
+                string tmp = Find_Longest_Color(x);
+                if (tmp == "C")
+                    x.inf.C_min = 4;
+                if (tmp == "D")
+                    x.inf.D_min = 4;
+                if (tmp == "H")
+                    x.inf.H_min = 4;
+                if (tmp == "S")
+                    x.inf.S_min = 4;
+
+                result = counter + Find_Longest_Color(x);
+                while (!Is_Possible(result))
+                    result = counter++ + Find_Longest_Color(x);
+
+                return result;
             }
 
             if (bid[0] == '2')
             {
                 if (points < 13)
-                    result = "PAS";
+                    return "PAS";
                 else
+                {
+                    x.inf.HP_min = 13;
                     result = "2BA";
+                    if (!Is_Possible(result))
+                    {
+                        x.inf.Clear();
+                        return "PAS";
+                    }
+                }
             }
             else
             {
                 if (bid[1] == 'S')
                 {
                     if (x.dist.S >= 3)
+                    {
+                        x.inf.S_min = 3;
                         result = (counter + 1).ToString() + "S";
-                    else if (Is_5(x))
-                        result = counter + Find_Longest_Color(x);
+                        if (!Is_Possible(result))
+                        {
+                            x.inf.Clear();
+                            return "PAS";
+                        }
+                    }
                     else
-                        result = counter + "BA";
-                }
-                else if(bid[1] == 'H')
-                {
-                    if (x.dist.H >= 3)
-                        result = (counter + 1).ToString() + "H";
-                    else if (Is_5(x))
-                        result = counter + Find_Longest_Color(x);
-                    else
-                        result = counter + "BA";
-                }
-                else if (bid[1] == 'D')
-                {
-                    if (Is_5(x))
-                        result = counter + Find_Longest_Color(x);
-                    else if (x.dist.D >= 4)
-                        result = (counter + 1).ToString() + "D";
-                    else
-                        result = counter + "BA";
-                }
-                else if (bid[1] == 'C')
-                {
-                    if (Is_5(x))
-                        result = counter + Find_Longest_Color(x);
-                    else if (x.dist.C >= 4)
-                        result = (counter + 1).ToString() + "C";
-                    else
-                        result = counter + "BA";
+                    {
+                        if (Is_5(x))
+                        {
+                            string tmp = Find_Longest_Color(x);
+                            x.inf.S_max = 2;
+                            if (tmp == "C")
+                            {
+                                x.inf.C_min = 5;
+                                x.inf.D_max = 4;
+                                x.inf.H_max = 4;
+                            }
+                            else if (tmp == "D")
+                            {
+                                x.inf.D_min = 5;
+                                x.inf.H_max = 4;
+                            }
+                            else
+                                x.inf.H_min = 5;
+                            result = counter + Find_Longest_Color(x);
+                        }
+                        if (Is_Possible(result))
+                            return result;
+                        else
+                        {
+                            int tmp_min = x.inf.HP_min;
+                            int tmp_max = x.inf.HP_max;
+                            x.inf.Clear();
+                            x.inf.HP_min = tmp_min;
+                            x.inf.HP_max = tmp_max;
+                            x.inf.C_max = 4;
+                            x.inf.D_max = 4;
+                            x.inf.H_max = 4;
+                            x.inf.S_max = 2;
+                            result = counter + "BA";
+                            if (!Is_Possible(result))
+                            {
+                                x.inf.Clear();
+                                return "PAS";
+                            }
+                        }
+                    }
                 }
 
-            }
+
+                else if (bid[1] == 'H')
+                {
+                    if (x.dist.H >= 3)
+                    {
+                        x.inf.H_min = 3;
+                        result = (counter + 1).ToString() + "H";
+                        if (!Is_Possible(result))
+                        {
+                            x.inf.Clear();
+                            return "PAS";
+                        }
+                    }
+                    else
+                    {
+                        if (Is_5(x))
+                        {
+                            string tmp = Find_Longest_Color(x);
+                            x.inf.H_max = 2;
+                            if (tmp == "C")
+                            {
+                                x.inf.C_min = 5;
+                                x.inf.D_max = 4;
+                                x.inf.S_max = 4;
+                            }
+                            else if (tmp == "D")
+                            {
+                                x.inf.D_min = 5;
+                                x.inf.S_max = 4;
+                            }
+                            else
+                                x.inf.S_min = 5;
+                            result = counter + Find_Longest_Color(x);
+                        }
+                        if (Is_Possible(result))
+                            return result;
+                        else
+                        {
+                            int tmp_min = x.inf.HP_min;
+                            int tmp_max = x.inf.HP_max;
+                            x.inf.Clear();
+                            x.inf.HP_min = tmp_min;
+                            x.inf.HP_max = tmp_max;
+                            x.inf.C_max = 4;
+                            x.inf.D_max = 4;
+                            x.inf.H_max = 2;
+                            x.inf.S_max = 4;
+                            result = counter + "BA";
+                            if (!Is_Possible(result))
+                            {
+                                x.inf.Clear();
+                                return "PAS";
+                            }
+                        }
+                    }
+                }
+
+                else if (bid[1] == 'D')
+                {
+                    if (Is_5(x) && Find_Longest_Color(x) != "D")
+                    {
+                        string tmp = Find_Longest_Color(x);
+                        if (tmp == "C")
+                        {
+                            x.inf.C_min = 5;
+                            x.inf.H_max = 4;
+                            x.inf.S_max = 4;
+                        }
+                        else if (tmp == "H")
+                        {
+                            x.inf.H_min = 5;
+                            x.inf.S_max = 4;
+                        }
+                        else
+                            x.inf.S_min = 5;
+                        result = counter + Find_Longest_Color(x);
+                    }
+
+                    if (Is_Possible(result) && result != "PAS") 
+                        return result;
+                    else
+                    {
+                        int tmp_min = x.inf.HP_min;
+                        int tmp_max = x.inf.HP_max;
+                        x.inf.Clear();
+                        x.inf.HP_min = tmp_min;
+                        x.inf.HP_max = tmp_max;
+
+                        if (x.dist.D >= 4)
+                        {
+                            x.inf.H_max = 4;
+                            x.inf.S_max = 4;
+                            x.inf.D_min = 4;
+                            result = (counter + 1).ToString() + "D";
+                            if (!Is_Possible(result))
+                            {
+                                x.inf.Clear();
+                                return "PAS";
+                            }
+                        }
+                        else
+                        {
+                            x.inf.C_max = 4;
+                            x.inf.D_max = 3;
+                            x.inf.H_max = 4;
+                            x.inf.S_max = 4;
+                            result = counter + "BA";
+                            if (!Is_Possible(result))
+                            {
+                                x.inf.Clear();
+                                return "PAS";
+                            }
+                        }
+                    }
+                }
+
+
+                else if (bid[1] == 'C')
+                {
+                    if (Is_5(x) && Find_Longest_Color(x) != "C")
+                    {
+                        string tmp = Find_Longest_Color(x);
+                        if (tmp == "D")
+                        {
+                            x.inf.D_min = 5;
+                            x.inf.H_max = 4;
+                            x.inf.S_max = 4;
+                        }
+                        else if (tmp == "H")
+                        {
+                            x.inf.H_min = 5;
+                            x.inf.S_max = 4;
+                        }
+                        else
+                            x.inf.S_min = 5;
+                        result = counter + Find_Longest_Color(x);
+                    }
+
+                    if (Is_Possible(result))
+                        return result;
+                    else
+                    {
+                        int tmp_min = x.inf.HP_min;
+                        int tmp_max = x.inf.HP_max;
+                        x.inf.Clear();
+                        x.inf.HP_min = tmp_min;
+                        x.inf.HP_max = tmp_max;
+
+                        if (x.dist.C >= 4)
+                        {
+                            x.inf.H_max = 4;
+                            x.inf.S_max = 4;
+                            x.inf.D_max = 4;
+                            x.inf.C_min = 4;
+                            result = (counter + 1).ToString() + "C";
+                            if (!Is_Possible(result))
+                            {
+                                x.inf.Clear();
+                                return "PAS";
+                            }
+                        }
+                        else
+                        {
+                            x.inf.C_max = 3;
+                            x.inf.D_max = 4;
+                            x.inf.H_max = 4;
+                            x.inf.S_max = 4;
+                            result = counter + "BA";
+                            if (!Is_Possible(result))
+                            {
+                                x.inf.Clear();
+                                return "PAS";
+                            }
+                        }
+                    }
+                }
+            
+            }  
             return result;
+        }
+
+        bool Is_Graph1()
+        {
+            if (bids.Count < 2)
+                return true;
+            else if (bids.Count == 2)
+            {
+                if (bids[0][1] == "PAS")
+                    return true;
+                else
+                    return false;
+            }
+            else if(bids.Count == 3)
+            {
+                if (bids[1][1] == "PAS")
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+
+        bool Is_Graph2()
+        {
+            if (bids.Count == 2)
+            {
+                if (bids[0][1] != "PAS")
+                    return true;
+                else
+                    return false;
+            }
+            else if (bids.Count == 3)
+            {
+                if (bids[1][1] != "PAS")
+                    return true;
+                else
+                    return false;
+            }
+            else if (bids.Count == 4)
+            {
+                if (bids[0][1] == "PAS" && bids[2][1] != "PAS")
+                    return true;
+                else
+                    return false;
+            }
+            else if (bids.Count == 5)
+            {
+                if (bids[1][1] == "PAS" && bids[3][1] != "PAS")
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
         }
 
         bool Computer_Move(Player x)
@@ -350,25 +819,22 @@ namespace bridge
             List<string> tmp = new List<string>();
             tmp.Add(x.index);
             string result = "";
-         
-            if (bids.Count < 2 || bids[bids.Count - 2][1] == "PAS")
+
+            if (Is_Graph1())
             {
                 result = Graph1(x);
                 if (!Is_Possible(result))
                     result = "X";
             }
-            else
+            else if (Is_Graph2())
             {
                 result = Graph2(x, bids[bids.Count - 2][1]);
                 if (!Is_Possible(result))
                 {
-                    if (bids[bids.Count - 2][1] == "X" && bids[bids.Count - 1][1] != "X")
+                    x.inf.Clear();
+                    if (bids[bids.Count - 1][1] == "X")
                     {
                         result = Find_Longest_Color(x);
-                        if (result[0] == bids[bids.Count - 3][1][1])
-                            result = Find_Longest_Color(x, true, bids[bids.Count - 3][1][1].ToString());
-                        else
-                            result = Find_Longest_Color(x);
                         for (int i = 1; i <= 7; i++)
                             if (Is_Possible(i.ToString() + result))
                             {
@@ -379,13 +845,17 @@ namespace bridge
                     }
                     else
                         result = "X";
-
-
                 }
             }
+            else
+                result = Evaluate(x);
+
+            if (!Is_Possible(result))
+                result = "PAS";
+
             tmp.Add(result);
             bids.Add(tmp);
-            course.Text += result + " ";
+            course.Text += result + "\t";
 
             if (bids.Count >= 4 && bids[bids.Count - 1][1] == "PAS" && bids[bids.Count - 2][1] == "PAS" && bids[bids.Count - 3][1] == "PAS")
                 return true;
@@ -394,70 +864,54 @@ namespace bridge
 
         }
 
-        string Evaluate()
+        string Evaluate(Player x)
         {
+            Player y = new Player();
+            if (x.index == "E")
+                y = MainWindow.W;
+            if (x.index == "W")
+                y = MainWindow.E;
+            if (x.index == "N")
+                y = MainWindow.S;
+            if (x.index == "S")
+                y = MainWindow.N;
 
+            Information tmp = new Information();
+            tmp.HP_min = x.dist.HP + y.inf.HP_min;
+            tmp.HP_max = x.dist.HP + y.inf.HP_max;
+            tmp.C_min = x.dist.C + y.inf.C_min;
+            tmp.C_max = x.dist.C + y.inf.C_max;
+            tmp.D_min = x.dist.D + y.inf.D_min;
+            tmp.D_max = x.dist.D + y.inf.D_max;
+            tmp.H_min = x.dist.H + y.inf.H_min;
+            tmp.H_max = x.dist.H + y.inf.H_max;
+            tmp.S_min = x.dist.S + y.inf.S_min;
+            tmp.S_max = x.dist.S + y.inf.S_max;
 
-
-            return "PAS";
+            if (tmp.HP_min < 25)
+                return "PAS";
+            else if (tmp.HP_min < 31)
+            {
+                if (tmp.H_min >= 8)
+                    return "4H";
+                if (tmp.S_min >= 8)
+                    return "4S";
+                if (tmp.D_min >= 8 && tmp.HP_min >= 28)
+                    return "5D";
+                if (tmp.C_min >= 8 && tmp.HP_min >= 28)
+                    return "5C";
+                return "3BA";
+            }
+            else
+                return "4BA";
         }
 
-
-
-        private void Pas(object sender, RoutedEventArgs e)
+        bool Is_2(Player x)
         {
-            List<string> tmp = new List<string>();
-            tmp.Add("S");
-            tmp.Add("PAS");
-            course.Text += "PAS ";
-            bids.Add(tmp);
-
-            if (bids.Count >= 4 && bids[bids.Count - 1][1] == "PAS" && bids[bids.Count - 2][1] == "PAS" && bids[bids.Count - 3][1] == "PAS")
-            {
-                MessageBox.Show("koniec");
-                return;
-            }
-
-
-
-
-            if (Computer_Move(MainWindow.W))
-            {
-                MessageBox.Show("koniec");
-                this.Close();
-            }
-            if (Computer_Move(MainWindow.N))
-            {
-                MessageBox.Show("koniec");
-                this.Close();
-            }
-            if (Computer_Move(MainWindow.E))
-            {
-                MessageBox.Show("koniec");
-                this.Close();
-            }
-
-            int counter = 0;
-            for (int i = 0; i < bids.Count; i++) 
-            {
-                if (bids[i][1] == "PAS")
-                    counter++;
-                if (i == 3)
-                    break;
-            }
-
-            if (counter == 4)
-            {
-                MessageBox.Show("cztery pasy");
-                this.Close();
-            }
+            if (x.dist.C >= 2 && x.dist.D >= 2 && x.dist.H >= 2 && x.dist.S >= 2) 
+                return true;
+            return false;
         }
-
-
-
-
-
-
 
         bool Is_5(Player x)
         {

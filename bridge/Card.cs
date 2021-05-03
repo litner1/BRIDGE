@@ -42,6 +42,7 @@ namespace bridge
                 color = 2;
         }
 
+        //komparator
         public static int Compare_Cards(Card l, Card r)
         {
             if (l.color < r.color)

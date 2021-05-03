@@ -72,7 +72,7 @@
         <TextBlock Grid.Column="7" x:Name="course" Grid.Row="1" Margin="3,3,3,3" TextWrapping="Wrap"></TextBlock>
         <Button Grid.Column="7" x:Name="X_Double" Grid.Row="2" Margin="3,3,3,3" Content="X" Click="Double" ></Button>
         <Button Grid.Column="7" x:Name="XX_Redouble" Grid.Row="3" Margin="3,3,3,3" Content="XX" ></Button>
-        <Button Grid.Column="7" Grid.Row="4" Margin="3,3,3,3" Content="PAS" Click="Pas" ></Button>
+        <Button Grid.Column="7" x:Name="Pass" Grid.Row="4" Margin="3,3,3,3" Content="PAS" Click="Button_Click"></Button>
         
 
 
